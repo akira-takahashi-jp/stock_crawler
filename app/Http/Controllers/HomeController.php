@@ -30,6 +30,12 @@ class HomeController extends Controller {
 	 */
 	public function index()
 	{
+		Excel::load($fileName, function($reader) {
+
+			// reader methods
+			print_r($reader);
+
+		});
 		return view('home');
 	}
 
