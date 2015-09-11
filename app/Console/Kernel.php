@@ -14,6 +14,8 @@ class Kernel extends ConsoleKernel {
 		'App\Console\Commands\Inspire',
 		'App\Console\Commands\ImportIssue',
 		'App\Console\Commands\CrawlStockInfo',
+		'App\Console\Commands\CrawlRanking',
+		'App\Console\Commands\CalcGradient',
 	];
 
 	/**

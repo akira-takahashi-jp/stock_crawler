@@ -1,6 +1,8 @@
 <?php namespace App\Http\Controllers;
 
-class HomeController extends Controller {
+use Illuminate\Support\Facades\DB;
+
+class Ranking75LowDiremptionController extends Controller {
 
 	/*
 	|--------------------------------------------------------------------------
@@ -20,7 +22,6 @@ class HomeController extends Controller {
 	 */
 	public function __construct()
 	{
-		$this->middleware('auth');
 	}
 
 	/**
@@ -30,12 +31,11 @@ class HomeController extends Controller {
 	 */
 	public function index()
 	{
-		Excel::load($fileName, function($reader) {
-
-			// reader methods
-			print_r($reader);
-
-		});
+		$ret = DB::table('ranking75_low_diremptions')
+			->join('issues', 'issue_id', '=', 'issues.id')
+			->where('issue_id', '=', '1972')
+			->get();
+		print_r($ret);
 		return view('home');
 	}
 

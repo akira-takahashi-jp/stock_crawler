@@ -11,4 +11,8 @@ class Issue extends Model {
 	public function stockPricelInfos(){
 		return $this->hasMany('App\StockPriceInfo');
 	}
+
+	public function ranking75LowDiremptions(){
+		return $this->hasMany('App\Ranking75LowDiremption');
+	}
 }

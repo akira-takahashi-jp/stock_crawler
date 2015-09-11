@@ -41,7 +41,7 @@ class CrawlStockInfo extends Command
 	public function fire()
 	{
 		$today = date('Y-m-d');
-		$yesterday = date('Y-m-d', strtotime('-1 day'));
+		$yesterday = date('Y-m-d', strtotime((date('N') == 1 ? '-3' : '-1') . ' day'));
 
 		$issues = Issue::all();
 
@@ -57,7 +57,7 @@ class CrawlStockInfo extends Command
 				$stockPriceInfoYesterday->acquire_at = $yesterday;
 			}
 
-			$html = file_get_contents($this->getUrl($issue->code));
+			$html = $this->getHtmlContent($this->getUrl($issue->code));
 			$ret = preg_match_all('#<dl.*?</dl>#ms', $html, $matches);
 			foreach ($matches[0] as $element) {
 				if (preg_match('#<strong>([^<]+)</strong>.*<dt class="title">単元株数#ms', $element, $matchesTemp)) {
@@ -115,6 +115,17 @@ class CrawlStockInfo extends Command
 	private function getUrl($code)
 	{
 		return "http://stocks.finance.yahoo.co.jp/stocks/detail/?code={$code}.t";
+	}
+
+	private function getHtmlContent($url){
+		for($i=0; $i<3; $i++){
+			try{
+				$content = @file_get_contents($url);
+				if($content) return $content;
+			}catch (Exception $e){
+
+			}
+		}
 	}
 
 	/**

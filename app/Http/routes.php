@@ -13,7 +13,7 @@
 
 Route::get('/', 'WelcomeController@index');
 
-Route::get('home', 'HomeController@index');
+Route::get('ranking75', 'Ranking75LowDiremptionController@index');
 
 Route::controllers([
 	'auth' => 'Auth\AuthController',

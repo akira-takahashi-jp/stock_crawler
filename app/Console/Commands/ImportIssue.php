@@ -43,7 +43,7 @@ class ImportIssue extends Command {
 		$market = $this->argument('market');
 
 		$fileName = storage_path() . '/app/' . time() . '.xls';
-		file_put_contents($fileName, file_get_contents($this->argument('url')));
+		file_put_contents($fileName, $this->getHtmlContent($this->argument('url')));
 
 		$reader = PHPExcel_IOFactory::createReader('Excel5');
 		$excel = $reader->load($fileName);
@@ -71,6 +71,17 @@ class ImportIssue extends Command {
 
 		unlink($fileName);
 
+	}
+
+	private function getHtmlContent($url){
+		for($i=0; $i<3; $i++){
+			try{
+				$content = @file_get_contents($url);
+				if($content) return $content;
+			}catch (Exception $e){
+
+			}
+		}
 	}
 
 	/**
