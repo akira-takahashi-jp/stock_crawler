@@ -77,7 +77,7 @@ class CalcGradient extends Command {
 
 		$mailBody = "";
 		foreach($checkIssueList as $issue){
-			$mailBody .= $issue->code . " " . $issue->name . " ¥" . number_format($issue->unit * $issue->price_up_to_date);
+			$mailBody .= $issue->code . " " . $issue->name . " ¥" . number_format($issue->unit * $issue->price_up_to_date) . ' http://stocks.finance.yahoo.co.jp/stocks/chart/?code=' . $issue->code . "&ct=z&t=1y&q=c&l=off&z=m&p=s,m75,m25&a=v\n";
 		}
 
 		mb_send_mail($this->mailTo, '75日トレンド転換面柄', $mailBody);
